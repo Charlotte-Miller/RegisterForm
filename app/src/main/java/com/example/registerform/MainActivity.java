@@ -2,20 +2,19 @@ package com.example.registerform;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
@@ -28,6 +27,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText[] EditText_list;
 
     String respondStr;
+
+    final Calendar calendar = Calendar.getInstance();
+    int day, month, year;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -62,11 +64,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         checkBox = findViewById(R.id.checkbox);
 
         text_view_register_status = findViewById(R.id.register_status);
+
+
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        month = calendar.get(Calendar.MONTH);
+        year = calendar.get(Calendar.YEAR);
     }
 
     @Override
     public void onClick(View view)
     {
+
         switch (view.getId())
         {
             case R.id.register:
@@ -76,12 +84,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (!checkBox.isChecked())
                 {
                     respond = "Please agree to our Terms of Use.";
-                }
-                else if (RadioGroup_gender.getCheckedRadioButtonId() == -1)
+                } else if (RadioGroup_gender.getCheckedRadioButtonId() == -1)
                 {
                     respond = "Please select your gender.";
-                }
-                else
+                } else
                 {
                     for (EditText current_EditText : EditText_list)
                     {
@@ -102,14 +108,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     text_view_register_status.setTextColor(Color.parseColor("#60d394"));
                     text_view_register_status.setTextSize(20);
-                    respond = "Successfully register!";aa
+                    respond = "Successfully register!";
                 }
 
                 text_view_register_status.setText(respond);
+                break;
 
 
             case R.id.birthday_select:
-                System.out.println("birthday select button");
+                // date picker dialog
+                DatePickerDialog datePicker = new DatePickerDialog(MainActivity.this,
+                        new DatePickerDialog.OnDateSetListener()
+                        {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
+                            {
+                                EditText_birthday.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                            }
+                        }, year, month, day);
+                datePicker.show();
                 break;
         }
     }
