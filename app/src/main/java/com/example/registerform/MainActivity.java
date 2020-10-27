@@ -82,10 +82,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     for (EditText current_EditText : EditText_list)
                     {
-                        field_value = current_EditText.getHint().toString();
-                        if (!field_value.isEmpty())
+                        field_value = current_EditText.getText().toString();
+                        if (field_value.isEmpty())
                         {
-                            respond += String.format("%s, ", field_value);
+                            respond += String.format("%s, ", current_EditText.getHint());
                         }
                     }
 //                    Remove the last comma + space
