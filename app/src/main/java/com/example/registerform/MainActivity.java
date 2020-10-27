@@ -2,12 +2,14 @@ package com.example.registerform;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -16,15 +18,15 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
-    EditText edit_text_first_name, edit_text_last_name, edit_text_birthday, edit_text_address, edit_text_email;
-
+    EditText EditText_first_name, EditText_last_name, EditText_birthday, EditText_address, EditText_email;
     Button button_birthday_select, button_register;
-
-    RadioGroup radio_group_gender;
-
+    RadioGroup RadioGroup_gender;
     CheckBox checkBox;
-
     TextView text_view_register_status;
+    RadioButton RadioButton_male, RadioButton_female;
+    EditText[] EditText_list;
+
+    String respondStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -32,16 +34,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        edit_text_first_name = findViewById(R.id.first_name);
-        edit_text_last_name = findViewById(R.id.last_name);
-        edit_text_birthday = findViewById(R.id.birthday);
-        edit_text_address = findViewById(R.id.address);
-        edit_text_email = findViewById(R.id.email);
+        EditText_first_name = findViewById(R.id.first_name);
+        EditText_last_name = findViewById(R.id.last_name);
+        EditText_birthday = findViewById(R.id.birthday);
+        EditText_address = findViewById(R.id.address);
+        EditText_email = findViewById(R.id.email);
+
+        EditText_list = new EditText[]{
+                EditText_first_name,
+                EditText_last_name,
+                EditText_birthday,
+                EditText_address,
+                EditText_email
+        };
 
         button_birthday_select = findViewById(R.id.birthday_select);
+        button_birthday_select.setOnClickListener(this);
         button_register = findViewById(R.id.register);
+        button_register.setOnClickListener(this);
 
-        radio_group_gender = findViewById(R.id.radio_group_gender);
+
+        RadioGroup_gender = findViewById(R.id.radio_group_gender);
+        RadioButton_female = findViewById(R.id.radio_btn_female);
+        RadioButton_male = findViewById(R.id.radio_btn_male);
 
         checkBox = findViewById(R.id.checkbox);
 
@@ -51,36 +66,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view)
     {
-        System.out.println(view.getId());
         switch (view.getId())
         {
             case R.id.register:
-                System.out.println("register");
-                ArrayList<String> unfilled_EditText_list = new ArrayList<>();
+                String respond = "Missing: ";
+                String field_value;
 
-//                Get all EditText in current layout
-                ViewGroup container = (ViewGroup) findViewById(R.id.container);
-
-                for (int i = 0; i < container.getChildCount(); i++)
+                if (!checkBox.isChecked())
                 {
-                    View child_view = container.getChildAt(i);
-
-//                    Filter out all EditText type
-                    if (child_view instanceof EditText)
+                    respond = "Please agree to our Terms of Use.";
+                } else if (RadioGroup_gender.getCheckedRadioButtonId() == -1)
+                {
+                    respond = "Please select your gender.";
+                } else
+                {
+                    for (EditText current_EditText : EditText_list)
                     {
-                        unfilled_EditText_list.add((String) ((EditText) child_view).getHint());
+                        field_value = current_EditText.getHint().toString();
+                        if (!field_value.isEmpty())
+                        {
+                            respond += String.format("%s, ", field_value);
+                        }
+                    }
+//                    Remove the last comma + space
+                    if ((respond != null) && (respond.length() > 0))
+                    {
+                        respond = respond.substring(0, respond.length() - 2);
                     }
                 }
-//                Check if there is any unfilled EditText
-                if (!unfilled_EditText_list.isEmpty())
-                {
-                    String missing_fields = Arrays.toString(unfilled_EditText_list.toArray());
-                    text_view_register_status.setText(
-                            String.format("Missing fields: %s", missing_fields)
-                    );
-                }
 
-                break;
+                text_view_register_status.setText(respond);
+
 
             case R.id.birthday_select:
                 System.out.println("birthday select button");
