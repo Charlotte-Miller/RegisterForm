@@ -62,7 +62,6 @@
             <EditText
                     android:id="@+id/last_name"
                     android:layout_width="188dp"
-
                     android:layout_height="46dp"
                     android:background="#ced4da"
                     android:hint="@string/last_name"

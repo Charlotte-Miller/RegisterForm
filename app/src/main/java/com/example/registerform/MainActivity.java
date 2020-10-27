@@ -3,6 +3,7 @@ package com.example.registerform;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,10 +76,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (!checkBox.isChecked())
                 {
                     respond = "Please agree to our Terms of Use.";
-                } else if (RadioGroup_gender.getCheckedRadioButtonId() == -1)
+                }
+                else if (RadioGroup_gender.getCheckedRadioButtonId() == -1)
                 {
                     respond = "Please select your gender.";
-                } else
+                }
+                else
                 {
                     for (EditText current_EditText : EditText_list)
                     {
@@ -93,6 +96,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     {
                         respond = respond.substring(0, respond.length() - 2);
                     }
+                }
+
+                if (respond.equals("Missing"))
+                {
+                    text_view_register_status.setTextColor(Color.parseColor("#60d394"));
+                    text_view_register_status.setTextSize(20);
+                    respond = "Successfully register!";aa
                 }
 
                 text_view_register_status.setText(respond);
