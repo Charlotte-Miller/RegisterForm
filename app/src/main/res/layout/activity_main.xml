@@ -246,7 +246,7 @@
                 android:textSize="17sp"
                 android:textAlignment="center"
                 android:gravity="center_horizontal"
-                android:textColor="@android:color/holo_red_light"
+                android:textColor="#ee6055"
                 />
     </LinearLayout>
 

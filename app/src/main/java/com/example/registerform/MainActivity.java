@@ -104,11 +104,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
 
-                if (respond.equals("Missing"))
+//                Change style for successful respond
+                if (respond.equals("Missing")) //Mean there's no unfilled filed
                 {
                     text_view_register_status.setTextColor(Color.parseColor("#60d394"));
                     text_view_register_status.setTextSize(20);
                     respond = "Successfully register!";
+                }
+                else //Reset to default style
+                {
+                    text_view_register_status.setTextColor(Color.parseColor("#ee6055"));
+                    text_view_register_status.setTextSize(17);
                 }
 
                 text_view_register_status.setText(respond);
