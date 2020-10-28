@@ -134,7 +134,7 @@
 
             <EditText
                     android:id="@+id/birthday"
-                    android:layout_width="243dp"
+                    android:layout_width="250dp"
                     android:layout_height="46dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
@@ -178,7 +178,7 @@
                 android:background="#ced4da"
                 android:hint="@string/address"
                 android:importantForAutofill="no"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:padding="7dp"
                 android:text=""
                 />

@@ -84,10 +84,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (!checkBox.isChecked())
                 {
                     respond = "Please agree to our Terms of Use.";
-                } else if (RadioGroup_gender.getCheckedRadioButtonId() == -1)
+                }
+                else if (RadioGroup_gender.getCheckedRadioButtonId() == -1)
                 {
                     respond = "Please select your gender.";
-                } else
+                }
+                else
                 {
                     for (EditText current_EditText : EditText_list)
                     {
